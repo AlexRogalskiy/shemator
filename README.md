@@ -1,0 +1,2 @@
+# shemator
+The Shemator project
