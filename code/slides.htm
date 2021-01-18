@@ -1,0 +1,890 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <link rel="dns-prefetch" href="https://on.notist.cloud">
+    <title>	Apache Kafka and KSQL in Action : Let’s Build a Streaming Data Pipeline!
+</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="preload" as="font" crossorigin="crossorigin" type="font/woff2" href="https://on.notist.cloud/fonts/TruenoLt.woff2">
+    <link rel="preload" as="font" crossorigin="crossorigin" type="font/woff2" href="https://on.notist.cloud/fonts/TruenoBd.woff2">
+        <link rel="stylesheet" href="/assets/css/styles-056.css">
+    <script src="/assets/js/focus-visible.js" async></script>
+    <link rel="shortcut icon" href="https://on.notist.cloud/assets/favicon.ico" type="image/x-icon">
+    	<link rel="canonical" href="https://talks.rmoff.net/5dqGLs/slides">
+	<meta name="description" content="Have you ever thought that you needed to be a programmer to do stream processing and build streaming data pipelines? Think again!">
+	<meta property="og:url"
+		  content="https://talks.rmoff.net/5dqGLs/slides">
+	<meta property="og:type" content="article">
+	<meta property="og:title" name="twitter:title"
+		  content="Apache Kafka and KSQL in Action : Let’s Build a Streaming Data Pipeline! by Robin Moffatt">
+	<meta property="og:description" name="twitter:description" content="Have you ever thought that you needed to be a programmer to do stream processing and build streaming data pipelines? Think again!">
+	<meta property="og:image" name="twitter:image" content="https://on.notist.cloud/slides/deck3051/large-0.jpg">
+	<meta name="twitter:card" content="summary_large_image">
+				<meta name="twitter:creator" content="@rmoff">
+			<link rel="alternate" type="application/json+oembed"
+			  href="/api/oembed?url=https%3A%2F%2Ftalks.rmoff.net%2F5dqGLs&amp;format=json"
+			  title="Apache Kafka and KSQL in Action : Let’s Build a Streaming Data Pipeline!">
+		
+	<script type="application/ld+json">
+		{
+			"@context": "https://schema.org",
+			"@type": "PresentationDigitalDocument",
+			"url": "https://talks.rmoff.net/5dqGLs/slides",
+			"name": "Apache Kafka and KSQL in Action : Let’s Build a Streaming Data Pipeline!",
+			"headline": "Apache Kafka and KSQL in Action : Let’s Build a Streaming Data Pipeline!",
+			"description": "Have you ever thought that you needed to be a programmer to do stream processing and build streaming data pipelines? Think again!",
+			"author": {
+				"@type": "Person",
+				"name": "Robin Moffatt",
+				"url": "https://talks.rmoff.net/"
+			},
+			"datePublished": "2018-10-29T08:00:00-05:00",
+			"keywords": "Digital media, Software development, Database, System software, Information science, Technology, Computer engineering, Computers, IT infrastructure, Software architecture, Information management, Application software, Software engineering, Apache Kafka, Computer data, Information retrieval, Data, Data management, Information technology, Software, Information technology management, Computing, Software design, Computer architecture, Apache Hadoop",
+			"image": "https://on.notist.cloud/slides/deck3051/large-0.jpg",
+			"publication": {
+				"@type": "PublicationEvent",
+				"name": "LISA 18",
+				"url": "https://noti.st/events/gEmu2v/lisa-18",
+				"location": {
+					"@type": "Place",
+					"address": "Nashville, TN, USA"
+				},
+				"startDate": "2018-10-29T08:00:00-05:00",
+				"endDate": "2018-10-31T18:00:00-05:00"
+			}
+		}
+	</script>
+
+        </head>
+<body>
+    <div class="full-width bg-white">
+    <div class="content-width site-banner ">
+        <nav>
+            <ul class="main-nav">
+                <li><a href="/">Home</a></li>
+                <li><a href="/bio">About</a></li>
+                <li><a href="/presentations">Presentations</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>
+	
+
+	
+
+	<div class="full-width bg-white nb">
+		<div class="content-width presentation-header">
+	        <h1><a href="/5dqGLs/apache-kafka-and-ksql-in-action-lets-build-a-streaming-data-pipeline">Apache Kafka and KSQL in Action : Let’s Build a Streaming Data Pipeline!</a></h1>
+	        <p class="subhead">A presentation at <a href="https://noti.st/events/gEmu2v/lisa-18">LISA 18</a> in October 2018 in <a href="https://noti.st/places/nashville-tn-usa">Nashville, TN, USA</a> by <a href="/">
+					Robin Moffatt
+				</a></p>
+	    </div>
+	    
+	</div>
+
+	<div class="bg-white full-width">
+    <div class="content-width">
+                    <h4 class="slide-heading">Slide 1</h4>
+            <div class="slide-item">
+                <div class="media">
+                    <img class="slide-image" src="https://on.notist.cloud/slides/deck3051/large-0.jpg" alt="Slide 1" loading="eager"
+                                 aria-describedby="slide1-desc"
+                                 srcset="https://on.notist.cloud/slides/deck3051/thumb-0.jpg 640w,
+                                                        https://on.notist.cloud/slides/deck3051/large-0.jpg 1600w">                </div>
+                <div class="content" id="slide1-desc">
+                    <h4></h4><p>confluent.io/ksql
+Apache Kafka and KSQL in Action : Let’s Build a Streaming Data Pipeline! USENIX Large Installation System Administration Conference (LISA) October 31 2018
+@rmoff
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7a08151813143a1915141c160f1f140e541315">[email&#160;protected]</a></p>                </div>
+            </div>
+                    <h4 class="slide-heading">Slide 2</h4>
+            <div class="slide-item">
+                <div class="media">
+                    <img class="slide-image" src="https://on.notist.cloud/slides/deck3051/large-1.jpg" alt="Slide 2" loading="eager"
+                                 aria-describedby="slide2-desc"
+                                 srcset="https://on.notist.cloud/slides/deck3051/thumb-1.jpg 640w,
+                                                        https://on.notist.cloud/slides/deck3051/large-1.jpg 1600w">                </div>
+                <div class="content" id="slide2-desc">
+                    <h4></h4><p>@rmoff / http://cnfl.io/ksql
+$ whoami • Developer Advocate @ Confluent • Working in data &amp; analytics since 2001 • Oracle Developer Champion • Blogging : http://rmoff.net &amp; http://cnfl.io/rmoff • Twitter: •
+Geek stuff
+•
+Beer &amp; Fried Breakfasts
+@rmoff
+https://speakerdeck.com/rmoff/ Apache Kafka and KSQL in Action : Let’s Build a Streaming Data Pipeline!</p>                </div>
+            </div>
+                    <h4 class="slide-heading">Slide 3</h4>
+            <div class="slide-item">
+                <div class="media">
+                    <img class="slide-image" src="https://on.notist.cloud/slides/deck3051/large-2.png" alt="Slide 3" loading="eager"
+                                 aria-describedby="slide3-desc"
+                                 srcset="https://on.notist.cloud/slides/deck3051/thumb-2.png 640w,
+                                                        https://on.notist.cloud/slides/deck3051/large-2.png 1600w">                </div>
+                <div class="content" id="slide3-desc">
+                    <h4></h4><p>@rmoff / http://cnfl.io/ksql
+Kafka Apache Kafka and KSQL in Action : Let’s Build a Streaming Data Pipeline!</p>                </div>
+            </div>
+                    <h4 class="slide-heading">Slide 4</h4>
+            <div class="slide-item">
+                <div class="media">
+                    <img class="slide-image" src="https://on.notist.cloud/slides/deck3051/large-3.jpg" alt="Slide 4" loading="lazy"
+                                 aria-describedby="slide4-desc"
+                                 srcset="https://on.notist.cloud/slides/deck3051/thumb-3.jpg 640w,
+                                                        https://on.notist.cloud/slides/deck3051/large-3.jpg 1600w">                </div>
+                <div class="content" id="slide4-desc">
+                    <h4></h4><p>Kafka is a Streaming Platform App
+App
+App
+App
+@rmoff / http://cnfl.io/ksql
+request-response
+changelogs App
+App
+KAFKA
+App
+App DWH
+Hadoop
+messaging OR stream processing
+streaming data pipelines
+Apache Kafka and KSQL in Action : Let’s Build a Streaming Data Pipeline!</p>                </div>
+            </div>
+                    <h4 class="slide-heading">Slide 5</h4>
+            <div class="slide-item">
+                <div class="media">
+                    <img class="slide-image" src="https://on.notist.cloud/slides/deck3051/large-4.png" alt="Slide 5" loading="lazy"
+                                 aria-describedby="slide5-desc"
+                                 srcset="https://on.notist.cloud/slides/deck3051/thumb-4.png 640w,
+                                                        https://on.notist.cloud/slides/deck3051/large-4.png 1600w">                </div>
+                <div class="content" id="slide5-desc">
+                    <h4></h4><p>@rmoff / http://cnfl.io/ksql
+Streaming is not just for realtime Apache Kafka and KSQL in Action : Let’s Build a Streaming Data Pipeline!</p>                </div>
+            </div>
+                    <h4 class="slide-heading">Slide 6</h4>
+            <div class="slide-item">
+                <div class="media">
+                    <img class="slide-image" src="https://on.notist.cloud/slides/deck3051/large-5.png" alt="Slide 6" loading="lazy"
+                                 aria-describedby="slide6-desc"
+                                 srcset="https://on.notist.cloud/slides/deck3051/thumb-5.png 640w,
+                                                        https://on.notist.cloud/slides/deck3051/large-5.png 1600w">                </div>
+                <div class="content" id="slide6-desc">
+                    <h4></h4><p>@rmoff / http://cnfl.io/ksql
+Streaming is for everyone Apache Kafka and KSQL in Action : Let’s Build a Streaming Data Pipeline!</p>                </div>
+            </div>
+                    <h4 class="slide-heading">Slide 7</h4>
+            <div class="slide-item">
+                <div class="media">
+                    <img class="slide-image" src="https://on.notist.cloud/slides/deck3051/large-6.jpg" alt="Slide 7" loading="lazy"
+                                 aria-describedby="slide7-desc"
+                                 srcset="https://on.notist.cloud/slides/deck3051/thumb-6.jpg 640w,
+                                                        https://on.notist.cloud/slides/deck3051/large-6.jpg 1600w">                </div>
+                <div class="content" id="slide7-desc">
+                    <h4></h4><p>@rmoff / http://cnfl.io/ksql
+All data is events Apache Kafka and KSQL in Action : Let’s Build a Streaming Data Pipeline!</p>                </div>
+            </div>
+                    <h4 class="slide-heading">Slide 8</h4>
+            <div class="slide-item">
+                <div class="media">
+                    <img class="slide-image" src="https://on.notist.cloud/slides/deck3051/large-7.jpg" alt="Slide 8" loading="lazy"
+                                 aria-describedby="slide8-desc"
+                                 srcset="https://on.notist.cloud/slides/deck3051/thumb-7.jpg 640w,
+                                                        https://on.notist.cloud/slides/deck3051/large-7.jpg 1600w">                </div>
+                <div class="content" id="slide8-desc">
+                    <h4></h4><p>A Dumb Pipeline
+Logs
+@rmoff / http://cnfl.io/ksql
+HDFS / S3 / BigQuery etc
+Apache Kafka and KSQL in Action : Let’s Build a Streaming Data Pipeline!</p>                </div>
+            </div>
+                    <h4 class="slide-heading">Slide 9</h4>
+            <div class="slide-item">
+                <div class="media">
+                    <img class="slide-image" src="https://on.notist.cloud/slides/deck3051/large-8.jpg" alt="Slide 9" loading="lazy"
+                                 aria-describedby="slide9-desc"
+                                 srcset="https://on.notist.cloud/slides/deck3051/thumb-8.jpg 640w,
+                                                        https://on.notist.cloud/slides/deck3051/large-8.jpg 1600w">                </div>
+                <div class="content" id="slide9-desc">
+                    <h4></h4><p>A Dumb Pipeline
+@rmoff / http://cnfl.io/ksql
+Logs HDFS / S3 / BigQuery etc Logs
+Apache Kafka and KSQL in Action : Let’s Build a Streaming Data Pipeline!</p>                </div>
+            </div>
+                    <h4 class="slide-heading">Slide 10</h4>
+            <div class="slide-item">
+                <div class="media">
+                    <img class="slide-image" src="https://on.notist.cloud/slides/deck3051/large-9.jpg" alt="Slide 10" loading="lazy"
+                                 aria-describedby="slide10-desc"
+                                 srcset="https://on.notist.cloud/slides/deck3051/thumb-9.jpg 640w,
+                                                        https://on.notist.cloud/slides/deck3051/large-9.jpg 1600w">                </div>
+                <div class="content" id="slide10-desc">
+                    <h4></h4><p>@rmoff / http://cnfl.io/ksql
+Stream Processing with Apache Kafka and KSQL
+All logs
+Errors HDFS / S3 / BigQuery etc
+Logs
+Stream Processing Apache Kafka and KSQL in Action : Let’s Build a Streaming Data Pipeline!</p>                </div>
+            </div>
+                    <h4 class="slide-heading">Slide 11</h4>
+            <div class="slide-item">
+                <div class="media">
+                    <img class="slide-image" src="https://on.notist.cloud/slides/deck3051/large-10.jpg" alt="Slide 11" loading="lazy"
+                                 aria-describedby="slide11-desc"
+                                 srcset="https://on.notist.cloud/slides/deck3051/thumb-10.jpg 640w,
+                                                        https://on.notist.cloud/slides/deck3051/large-10.jpg 1600w">                </div>
+                <div class="content" id="slide11-desc">
+                    <h4></h4><p>@rmoff / http://cnfl.io/ksql
+Real-time Event Stream Enrichment order events
+customer orders
+C D C RDBMS &lt;y&gt;
+customer Stream Processing Apache Kafka and KSQL in Action : Let’s Build a Streaming Data Pipeline!</p>                </div>
+            </div>
+                    <h4 class="slide-heading">Slide 12</h4>
+            <div class="slide-item">
+                <div class="media">
+                    <img class="slide-image" src="https://on.notist.cloud/slides/deck3051/large-11.jpg" alt="Slide 12" loading="lazy"
+                                 aria-describedby="slide12-desc"
+                                 srcset="https://on.notist.cloud/slides/deck3051/thumb-11.jpg 640w,
+                                                        https://on.notist.cloud/slides/deck3051/large-11.jpg 1600w">                </div>
+                <div class="content" id="slide12-desc">
+                    <h4></h4><p>Transform Once, Use Many
+@rmoff / http://cnfl.io/ksql
+order events
+customer orders
+C D C RDBMS &lt;y&gt;
+customer Stream Processing
+New App &lt;x&gt;
+Apache Kafka and KSQL in Action : Let’s Build a Streaming Data Pipeline!</p>                </div>
+            </div>
+                    <h4 class="slide-heading">Slide 13</h4>
+            <div class="slide-item">
+                <div class="media">
+                    <img class="slide-image" src="https://on.notist.cloud/slides/deck3051/large-12.jpg" alt="Slide 13" loading="lazy"
+                                 aria-describedby="slide13-desc"
+                                 srcset="https://on.notist.cloud/slides/deck3051/thumb-12.jpg 640w,
+                                                        https://on.notist.cloud/slides/deck3051/large-12.jpg 1600w">                </div>
+                <div class="content" id="slide13-desc">
+                    <h4></h4><p>Transform Once, Use Many
+@rmoff / http://cnfl.io/ksql
+order events
+customer orders
+C D C RDBMS &lt;y&gt;
+HDFS / S3 / etc
+customer Stream Processing
+New App &lt;x&gt;
+Apache Kafka and KSQL in Action : Let’s Build a Streaming Data Pipeline!</p>                </div>
+            </div>
+                    <h4 class="slide-heading">Slide 14</h4>
+            <div class="slide-item">
+                <div class="media">
+                    <img class="slide-image" src="https://on.notist.cloud/slides/deck3051/large-13.jpg" alt="Slide 14" loading="lazy"
+                                 aria-describedby="slide14-desc"
+                                 srcset="https://on.notist.cloud/slides/deck3051/thumb-13.jpg 640w,
+                                                        https://on.notist.cloud/slides/deck3051/large-13.jpg 1600w">                </div>
+                <div class="content" id="slide14-desc">
+                    <h4></h4><p>@rmoff / http://cnfl.io/ksql
+Let’s Build It!
+Push notification
+Rating events Operational Dashboard
+User data Join events to users, and filter
+Data Lake
+Apache Kafka and KSQL in Action : Let’s Build a Streaming Data Pipeline!</p>                </div>
+            </div>
+                    <h4 class="slide-heading">Slide 15</h4>
+            <div class="slide-item">
+                <div class="media">
+                    <img class="slide-image" src="https://on.notist.cloud/slides/deck3051/large-14.jpg" alt="Slide 15" loading="lazy"
+                                 aria-describedby="slide15-desc"
+                                 srcset="https://on.notist.cloud/slides/deck3051/thumb-14.jpg 640w,
+                                                        https://on.notist.cloud/slides/deck3051/large-14.jpg 1600w">                </div>
+                <div class="content" id="slide15-desc">
+                    <h4></h4><p>@rmoff / http://cnfl.io/ksql
+Let’s Build It! Rating events
+App
+Pro d
+Push notification
+I P A r e m
+App
+u s n o C
+uc e rA PI
+Operational Dashboard
+Elasticsearch User data
+RDBMS
+Join events to users, and filter
+Data Lake
+S3/HDFS/ SnowflakeDB etc
+Apache Kafka and KSQL in Action : Let’s Build a Streaming Data Pipeline!</p>                </div>
+            </div>
+                    <h4 class="slide-heading">Slide 16</h4>
+            <div class="slide-item">
+                <div class="media">
+                    <img class="slide-image" src="https://on.notist.cloud/slides/deck3051/large-15.jpg" alt="Slide 16" loading="lazy"
+                                 aria-describedby="slide16-desc"
+                                 srcset="https://on.notist.cloud/slides/deck3051/thumb-15.jpg 640w,
+                                                        https://on.notist.cloud/slides/deck3051/large-15.jpg 1600w">                </div>
+                <div class="content" id="slide16-desc">
+                    <h4></h4><p>@rmoff / http://cnfl.io/ksql
+Kafka Connect Rating events
+App
+a k f a K t c e n n o C
+App
+u s n o C
+uc e rA PI
+Kafka Connect
+a fk t Ka ec n
+RDBMS
+I P A r e m
+Operational Dashboard
+Elasticsearch
+n Co
+User data
+Pro d
+Push notification
+Join events to users, and filter
+Data Lake
+S3/HDFS/ SnowflakeDB etc
+Apache Kafka and KSQL in Action : Let’s Build a Streaming Data Pipeline!</p>                </div>
+            </div>
+                    <h4 class="slide-heading">Slide 17</h4>
+            <div class="slide-item">
+                <div class="media">
+                    <img class="slide-image" src="https://on.notist.cloud/slides/deck3051/large-16.png" alt="Slide 17" loading="lazy"
+                                 aria-describedby="slide17-desc"
+                                 srcset="https://on.notist.cloud/slides/deck3051/thumb-16.png 640w,
+                                                        https://on.notist.cloud/slides/deck3051/large-16.png 1600w">                </div>
+                <div class="content" id="slide17-desc">
+                    <h4></h4><p>@rmoff / http://cnfl.io/ksql
+Kafka Connect
+An API of Apache Kafka, providing reliable and scalable integration of Kafka with other systems – no coding required.
+{ “connector.class”: “io.confluent.connect.jdbc.JdbcSourceConnector”, “connection.url”: “jdbc:mysql://localhost:3306/demo?user=rmoff&amp;password=foo”, “table.whitelist”: “sales,orders,customers” } https://docs.confluent.io/current/connect/ Apache Kafka and KSQL in Action : Let’s Build a Streaming Data Pipeline!</p>                </div>
+            </div>
+                    <h4 class="slide-heading">Slide 18</h4>
+            <div class="slide-item">
+                <div class="media">
+                    <img class="slide-image" src="https://on.notist.cloud/slides/deck3051/large-17.jpg" alt="Slide 18" loading="lazy"
+                                 aria-describedby="slide18-desc"
+                                 srcset="https://on.notist.cloud/slides/deck3051/thumb-17.jpg 640w,
+                                                        https://on.notist.cloud/slides/deck3051/large-17.jpg 1600w">                </div>
+                <div class="content" id="slide18-desc">
+                    <h4></h4><p>@rmoff / http://cnfl.io/ksql
+Streaming Integration with Kafka Connect
+syslog flat file CSV JSON
+Sources
+MQTT
+Tasks
+Workers
+Kafka Connect Kafka Brokers
+Apache Kafka and KSQL in Action : Let’s Build a Streaming Data Pipeline!</p>                </div>
+            </div>
+                    <h4 class="slide-heading">Slide 19</h4>
+            <div class="slide-item">
+                <div class="media">
+                    <img class="slide-image" src="https://on.notist.cloud/slides/deck3051/large-18.jpg" alt="Slide 19" loading="lazy"
+                                 aria-describedby="slide19-desc"
+                                 srcset="https://on.notist.cloud/slides/deck3051/thumb-18.jpg 640w,
+                                                        https://on.notist.cloud/slides/deck3051/large-18.jpg 1600w">                </div>
+                <div class="content" id="slide19-desc">
+                    <h4></h4><p>@rmoff / http://cnfl.io/ksql
+Streaming Integration with Kafka Connect
+Amazon S3
+Sinks MQT
+Tasks
+Workers
+Kafka Connect Kafka Brokers
+Apache Kafka and KSQL in Action : Let’s Build a Streaming Data Pipeline!</p>                </div>
+            </div>
+                    <h4 class="slide-heading">Slide 20</h4>
+            <div class="slide-item">
+                <div class="media">
+                    <img class="slide-image" src="https://on.notist.cloud/slides/deck3051/large-19.jpg" alt="Slide 20" loading="lazy"
+                                 aria-describedby="slide20-desc"
+                                 srcset="https://on.notist.cloud/slides/deck3051/thumb-19.jpg 640w,
+                                                        https://on.notist.cloud/slides/deck3051/large-19.jpg 1600w">                </div>
+                <div class="content" id="slide20-desc">
+                    <h4></h4><p>@rmoff / http://cnfl.io/ksql
+Streaming Integration with Kafka Connect
+Amazon S3
+syslog flat file CSV JSON
+Sources
+Sinks MQT
+MQTT
+Tasks
+Workers
+Kafka Connect Kafka Brokers
+Apache Kafka and KSQL in Action : Let’s Build a Streaming Data Pipeline!</p>                </div>
+            </div>
+                    <h4 class="slide-heading">Slide 21</h4>
+            <div class="slide-item">
+                <div class="media">
+                    <img class="slide-image" src="https://on.notist.cloud/slides/deck3051/large-20.jpg" alt="Slide 21" loading="lazy"
+                                 aria-describedby="slide21-desc"
+                                 srcset="https://on.notist.cloud/slides/deck3051/thumb-20.jpg 640w,
+                                                        https://on.notist.cloud/slides/deck3051/large-20.jpg 1600w">                </div>
+                <div class="content" id="slide21-desc">
+                    <h4></h4><p>Confluent Hub
+@rmoff / http://cnfl.io/ksql
+• One-stop place to discover and download : • Connectors • Transformations • Converters
+hub.confluent.io Apache Kafka and KSQL in Action : Let’s Build a Streaming Data Pipeline!</p>                </div>
+            </div>
+                    <h4 class="slide-heading">Slide 22</h4>
+            <div class="slide-item">
+                <div class="media">
+                    <img class="slide-image" src="https://on.notist.cloud/slides/deck3051/large-21.jpg" alt="Slide 22" loading="lazy"
+                                 aria-describedby="slide22-desc"
+                                 srcset="https://on.notist.cloud/slides/deck3051/thumb-21.jpg 640w,
+                                                        https://on.notist.cloud/slides/deck3051/large-21.jpg 1600w">                </div>
+                <div class="content" id="slide22-desc">
+                    <h4></h4><p>@rmoff / http://cnfl.io/ksql
+Kafka Connect + Schema Registry = WIN Avro Schema
+Schema Registry Elasticsearch
+RDBMS Kafka Connect
+Avro Message
+Kafka Connect
+Apache Kafka and KSQL in Action : Let’s Build a Streaming Data Pipeline!</p>                </div>
+            </div>
+                    <h4 class="slide-heading">Slide 23</h4>
+            <div class="slide-item">
+                <div class="media">
+                    <img class="slide-image" src="https://on.notist.cloud/slides/deck3051/large-22.jpg" alt="Slide 23" loading="lazy"
+                                 aria-describedby="slide23-desc"
+                                 srcset="https://on.notist.cloud/slides/deck3051/thumb-22.jpg 640w,
+                                                        https://on.notist.cloud/slides/deck3051/large-22.jpg 1600w">                </div>
+                <div class="content" id="slide23-desc">
+                    <h4></h4><p>@rmoff / http://cnfl.io/ksql
+Kafka Connect + Schema Registry = WIN Avro Schema
+Schema Registry Elasticsearch
+RDBMS Kafka Connect
+Avro Message
+Kafka Connect
+Apache Kafka and KSQL in Action : Let’s Build a Streaming Data Pipeline!</p>                </div>
+            </div>
+                    <h4 class="slide-heading">Slide 24</h4>
+            <div class="slide-item">
+                <div class="media">
+                    <img class="slide-image" src="https://on.notist.cloud/slides/deck3051/large-23.png" alt="Slide 24" loading="lazy"
+                                 aria-describedby="slide24-desc"
+                                 srcset="https://on.notist.cloud/slides/deck3051/thumb-23.png 640w,
+                                                        https://on.notist.cloud/slides/deck3051/large-23.png 1600w">                </div>
+                <div class="content" id="slide24-desc">
+                    <h4></h4><p>@rmoff / http://cnfl.io/ksql
+Kafka → Elasticsearch
+curl -X “POST” “http://kafka-connect-cp:18083/connectors/” \ -H “Content-Type: application/json” \ -d ‘{ “name”: “es_sink_lisa18”, “config”: { “connector.class”: “io.confluent.connect.elasticsearch.ElasticsearchSinkConnector”, “key.converter”: “org.apache.kafka.connect.storage.StringConverter”, “value.converter”: “org.apache.kafka.connect.json.JsonConverter”, “value.converter.schemas.enable”: false, “topics”: “lisa18”, “key.ignore”: “true”, “schema.ignore”: “true”, “type.name”: “type.name=kafkaconnect”, “connection.url”: “http://elasticsearch:9200” } }’
+Apache Kafka and KSQL in Action : Let’s Build a Streaming Data Pipeline!</p>                </div>
+            </div>
+                    <h4 class="slide-heading">Slide 25</h4>
+            <div class="slide-item">
+                <div class="media">
+                    <img class="slide-image" src="https://on.notist.cloud/slides/deck3051/large-24.jpg" alt="Slide 25" loading="lazy"
+                                 aria-describedby="slide25-desc"
+                                 srcset="https://on.notist.cloud/slides/deck3051/thumb-24.jpg 640w,
+                                                        https://on.notist.cloud/slides/deck3051/large-24.jpg 1600w">                </div>
+                <div class="content" id="slide25-desc">
+                    <h4></h4><p>@rmoff / http://cnfl.io/ksql
+Demo Time! Producer API
+MySQL
+t c e n n o C a k f Ka m u i z e b e D
+Apache Kafka and KSQL in Action : Let’s Build a Streaming Data Pipeline!</p>                </div>
+            </div>
+                    <h4 class="slide-heading">Slide 26</h4>
+            <div class="slide-item">
+                <div class="media">
+                    <img class="slide-image" src="https://on.notist.cloud/slides/deck3051/large-25.jpg" alt="Slide 26" loading="lazy"
+                                 aria-describedby="slide26-desc"
+                                 srcset="https://on.notist.cloud/slides/deck3051/thumb-25.jpg 640w,
+                                                        https://on.notist.cloud/slides/deck3051/large-25.jpg 1600w">                </div>
+                <div class="content" id="slide26-desc">
+                    <h4></h4><p>@rmoff / http://cnfl.io/ksql
+Let’s Build It! Rating events
+App
+a k f a K t c e n n o C
+App
+u s n o C
+uc e rA PI
+Kafka Connect
+a fk t Ka ec n
+RDBMS
+I P A r e m
+Operational Dashboard
+Elasticsearch
+n Co
+User data
+Pro d
+Push notification
+Join events to users, and filter
+Data Lake
+S3/HDFS/ SnowflakeDB etc
+Apache Kafka and KSQL in Action : Let’s Build a Streaming Data Pipeline!</p>                </div>
+            </div>
+                    <h4 class="slide-heading">Slide 27</h4>
+            <div class="slide-item">
+                <div class="media">
+                    <img class="slide-image" src="https://on.notist.cloud/slides/deck3051/large-26.jpg" alt="Slide 27" loading="lazy"
+                                 aria-describedby="slide27-desc"
+                                 srcset="https://on.notist.cloud/slides/deck3051/thumb-26.jpg 640w,
+                                                        https://on.notist.cloud/slides/deck3051/large-26.jpg 1600w">                </div>
+                <div class="content" id="slide27-desc">
+                    <h4></h4><p>@rmoff / http://cnfl.io/ksql
+KSQL
+Push notification Rating events
+App
+Kafka Connect
+a fk t Ka ec n
+RDBMS
+u s n o C
+uc e rA PI
+a k f a K t c e n n o C
+App
+Operational Dashboard
+Elasticsearch
+n Co
+User data
+Pro d
+I P A r e m
+KSQL
+Join events to users, and filter
+Data Lake
+S3/HDFS/ SnowflakeDB etc
+Apache Kafka and KSQL in Action : Let’s Build a Streaming Data Pipeline!</p>                </div>
+            </div>
+                    <h4 class="slide-heading">Slide 28</h4>
+            <div class="slide-item">
+                <div class="media">
+                    <img class="slide-image" src="https://on.notist.cloud/slides/deck3051/large-27.png" alt="Slide 28" loading="lazy"
+                                 aria-describedby="slide28-desc"
+                                 srcset="https://on.notist.cloud/slides/deck3051/thumb-27.png 640w,
+                                                        https://on.notist.cloud/slides/deck3051/large-27.png 1600w">                </div>
+                <div class="content" id="slide28-desc">
+                    <h4></h4><p>@rmoff / http://cnfl.io/ksql
+KSQL is a
+Declarative Stream Processing Language Apache Kafka and KSQL in Action : Let’s Build a Streaming Data Pipeline!</p>                </div>
+            </div>
+                    <h4 class="slide-heading">Slide 29</h4>
+            <div class="slide-item">
+                <div class="media">
+                    <img class="slide-image" src="https://on.notist.cloud/slides/deck3051/large-28.png" alt="Slide 29" loading="lazy"
+                                 aria-describedby="slide29-desc"
+                                 srcset="https://on.notist.cloud/slides/deck3051/thumb-28.png 640w,
+                                                        https://on.notist.cloud/slides/deck3051/large-28.png 1600w">                </div>
+                <div class="content" id="slide29-desc">
+                    <h4></h4><p>@rmoff / http://cnfl.io/ksql
+KSQL is the
+Streaming SQL Engine for Apache Kafka Apache Kafka and KSQL in Action : Let’s Build a Streaming Data Pipeline!</p>                </div>
+            </div>
+                    <h4 class="slide-heading">Slide 30</h4>
+            <div class="slide-item">
+                <div class="media">
+                    <img class="slide-image" src="https://on.notist.cloud/slides/deck3051/large-29.png" alt="Slide 30" loading="lazy"
+                                 aria-describedby="slide30-desc"
+                                 srcset="https://on.notist.cloud/slides/deck3051/thumb-29.png 640w,
+                                                        https://on.notist.cloud/slides/deck3051/large-29.png 1600w">                </div>
+                <div class="content" id="slide30-desc">
+                    <h4></h4><p>@rmoff / http://cnfl.io/ksql
+KSQL for Real-Time Monitoring • Log data monitoring, tracking and alerting • syslog data • Sensor / IoT data
+CREATE STREAM SYSLOG_INVALID_USERS AS SELECT HOST, MESSAGE FROM SYSLOG WHERE MESSAGE LIKE ‘%Invalid user%’; http://cnfl.io/syslogs-filtering / http://cnfl.io/syslog-alerting Apache Kafka and KSQL in Action : Let’s Build a Streaming Data Pipeline!</p>                </div>
+            </div>
+                    <h4 class="slide-heading">Slide 31</h4>
+            <div class="slide-item">
+                <div class="media">
+                    <img class="slide-image" src="https://on.notist.cloud/slides/deck3051/large-30.png" alt="Slide 31" loading="lazy"
+                                 aria-describedby="slide31-desc"
+                                 srcset="https://on.notist.cloud/slides/deck3051/thumb-30.png 640w,
+                                                        https://on.notist.cloud/slides/deck3051/large-30.png 1600w">                </div>
+                <div class="content" id="slide31-desc">
+                    <h4></h4><p>@rmoff / http://cnfl.io/ksql
+KSQL for Streaming ETL Joining, filtering, and aggregating streams of event data
+CREATE STREAM vip_actions AS SELECT userid, page, action FROM clickstream c LEFT JOIN users u ON c.userid = u.user_id WHERE u.level = ‘Platinum’;
+Apache Kafka and KSQL in Action : Let’s Build a Streaming Data Pipeline!</p>                </div>
+            </div>
+                    <h4 class="slide-heading">Slide 32</h4>
+            <div class="slide-item">
+                <div class="media">
+                    <img class="slide-image" src="https://on.notist.cloud/slides/deck3051/large-31.png" alt="Slide 32" loading="lazy"
+                                 aria-describedby="slide32-desc"
+                                 srcset="https://on.notist.cloud/slides/deck3051/thumb-31.png 640w,
+                                                        https://on.notist.cloud/slides/deck3051/large-31.png 1600w">                </div>
+                <div class="content" id="slide32-desc">
+                    <h4></h4><p>@rmoff / http://cnfl.io/ksql
+KSQL for Anomaly Detection Identifying patterns or anomalies in real-time data, surfaced in milliseconds
+CREATE TABLE possible_fraud AS SELECT card_number, count(<em>) FROM authorization_attempts WINDOW TUMBLING (SIZE 5 SECONDS) GROUP BY card_number HAVING count(</em>) &gt; 3; Apache Kafka and KSQL in Action : Let’s Build a Streaming Data Pipeline!</p>                </div>
+            </div>
+                    <h4 class="slide-heading">Slide 33</h4>
+            <div class="slide-item">
+                <div class="media">
+                    <img class="slide-image" src="https://on.notist.cloud/slides/deck3051/large-32.png" alt="Slide 33" loading="lazy"
+                                 aria-describedby="slide33-desc"
+                                 srcset="https://on.notist.cloud/slides/deck3051/thumb-32.png 640w,
+                                                        https://on.notist.cloud/slides/deck3051/large-32.png 1600w">                </div>
+                <div class="content" id="slide33-desc">
+                    <h4></h4><p>@rmoff / http://cnfl.io/ksql
+KSQL for Data Transformation Make simple derivations of existing topics from the command line
+CREATE STREAM pageviews WITH (PARTITIONS=4, VALUE_FORMAT=’AVRO’) AS SELECT * FROM pageviews_json;
+Apache Kafka and KSQL in Action : Let’s Build a Streaming Data Pipeline!</p>                </div>
+            </div>
+                    <h4 class="slide-heading">Slide 34</h4>
+            <div class="slide-item">
+                <div class="media">
+                    <img class="slide-image" src="https://on.notist.cloud/slides/deck3051/large-33.jpg" alt="Slide 34" loading="lazy"
+                                 aria-describedby="slide34-desc"
+                                 srcset="https://on.notist.cloud/slides/deck3051/thumb-33.jpg 640w,
+                                                        https://on.notist.cloud/slides/deck3051/large-33.jpg 1600w">                </div>
+                <div class="content" id="slide34-desc">
+                    <h4></h4><p>@rmoff / http://cnfl.io/ksql
+KSQL in Development and Production Interactive KSQL for development and testing
+Headless KSQL for Production
+REST Desired KSQL queries have been identified
+“Hmm, let me try out this idea…” Apache Kafka and KSQL in Action : Let’s Build a Streaming Data Pipeline!</p>                </div>
+            </div>
+                    <h4 class="slide-heading">Slide 35</h4>
+            <div class="slide-item">
+                <div class="media">
+                    <img class="slide-image" src="https://on.notist.cloud/slides/deck3051/large-34.jpg" alt="Slide 35" loading="lazy"
+                                 aria-describedby="slide35-desc"
+                                 srcset="https://on.notist.cloud/slides/deck3051/thumb-34.jpg 640w,
+                                                        https://on.notist.cloud/slides/deck3051/large-34.jpg 1600w">                </div>
+                <div class="content" id="slide35-desc">
+                    <h4></h4><p>@rmoff / http://cnfl.io/ksql
+Demo Time! Producer API
+MySQL
+t c e n n o C a k f Ka m u i z e b e D
+Kafka Connect
+Elasticsearch
+Apache Kafka and KSQL in Action : Let’s Build a Streaming Data Pipeline!</p>                </div>
+            </div>
+                    <h4 class="slide-heading">Slide 36</h4>
+            <div class="slide-item">
+                <div class="media">
+                    <img class="slide-image" src="https://on.notist.cloud/slides/deck3051/large-35.jpg" alt="Slide 36" loading="lazy"
+                                 aria-describedby="slide36-desc"
+                                 srcset="https://on.notist.cloud/slides/deck3051/thumb-35.jpg 640w,
+                                                        https://on.notist.cloud/slides/deck3051/large-35.jpg 1600w">                </div>
+                <div class="content" id="slide36-desc">
+                    <h4></h4><p>@rmoff / http://cnfl.io/ksql
+{ “rating_id”: 5313, “user_id”: 3, “stars”: 4, “route_id”: 6975, “rating_time”: 1519304105213, “channel”: “web”, “message”: “worst. flight. ever. #neveragain”
+Filter all ratings where STARS&lt;3
+POOR_RATINGS
+}
+Producer API
+CREATE STREAM POOR_RATINGS AS SELECT * FROM ratings WHERE STARS &lt;3 Apache Kafka and KSQL in Action : Let’s Build a Streaming Data Pipeline!</p>                </div>
+            </div>
+                    <h4 class="slide-heading">Slide 37</h4>
+            <div class="slide-item">
+                <div class="media">
+                    <img class="slide-image" src="https://on.notist.cloud/slides/deck3051/large-36.jpg" alt="Slide 37" loading="lazy"
+                                 aria-describedby="slide37-desc"
+                                 srcset="https://on.notist.cloud/slides/deck3051/thumb-36.jpg 640w,
+                                                        https://on.notist.cloud/slides/deck3051/large-36.jpg 1600w">                </div>
+                <div class="content" id="slide37-desc">
+                    <h4></h4><p>@rmoff / http://cnfl.io/ksql
+Do you think that’s a table you are querying?
+Apache Kafka and KSQL in Action : Let’s Build a Streaming Data Pipeline!</p>                </div>
+            </div>
+                    <h4 class="slide-heading">Slide 38</h4>
+            <div class="slide-item">
+                <div class="media">
+                    <img class="slide-image" src="https://on.notist.cloud/slides/deck3051/large-37.png" alt="Slide 38" loading="lazy"
+                                 aria-describedby="slide38-desc"
+                                 srcset="https://on.notist.cloud/slides/deck3051/thumb-37.png 640w,
+                                                        https://on.notist.cloud/slides/deck3051/large-37.png 1600w">                </div>
+                <div class="content" id="slide38-desc">
+                    <h4></h4><p>The Stream Table Duality
+Time
+Stream Account ID Amount 12345 + €50 12345</p><ul><li>€25
+12345
+-€60
+Read more: https://cnfl.io/stream-table-duality
+@rmoff / http://cnfl.io/ksql
+Account ID Balance Table 12345 €50 Account ID Balance 12345 €75 Account ID Balance 12345 €15
+Apache Kafka and KSQL in Action : Let’s Build a Streaming Data Pipeline!</li></ul>                </div>
+            </div>
+                    <h4 class="slide-heading">Slide 39</h4>
+            <div class="slide-item">
+                <div class="media">
+                    <img class="slide-image" src="https://on.notist.cloud/slides/deck3051/large-38.jpg" alt="Slide 39" loading="lazy"
+                                 aria-describedby="slide39-desc"
+                                 srcset="https://on.notist.cloud/slides/deck3051/thumb-38.jpg 640w,
+                                                        https://on.notist.cloud/slides/deck3051/large-38.jpg 1600w">                </div>
+                <div class="content" id="slide39-desc">
+                    <h4></h4><p>@rmoff / http://cnfl.io/ksql
+The truth is the log. The database is a cache of a subset of the log. —Pat Helland Immutability Changes Everything http://cidrdb.org/cidr2015/Papers/CIDR15_Paper16.pdf
+Apache Kafka and KSQL in Action : Let’s Build a Streaming Data Pipeline! Photo by Bobby Burch on Unsplash</p>                </div>
+            </div>
+                    <h4 class="slide-heading">Slide 40</h4>
+            <div class="slide-item">
+                <div class="media">
+                    <img class="slide-image" src="https://on.notist.cloud/slides/deck3051/large-39.jpg" alt="Slide 40" loading="lazy"
+                                 aria-describedby="slide40-desc"
+                                 srcset="https://on.notist.cloud/slides/deck3051/thumb-39.jpg 640w,
+                                                        https://on.notist.cloud/slides/deck3051/large-39.jpg 1600w">                </div>
+                <div class="content" id="slide40-desc">
+                    <h4></h4><p>@rmoff / http://cnfl.io/ksql
+{ “rating_id”: 5313, “user_id”: 3, “stars”: 4, “route_id”: 6975, “rating_time”: 1519304105213, “channel”: “web”, “message”: “worst. flight. ever. #neveragain” }
+Producer API
+Join each rating to customer data
+RATINGS_WITH_CUSTOMER_DATA
+t c e n n o C a k f a K { “id”: 3, “first_name”: “Merilyn”, “last_name”: “Doughartie”, “email”: “<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="8be6efe4feece3eaf9ffe2eebacbefeeefeee8e6f8a5e8e4e6">[email&#160;protected]</a>”, “gender”: “Female”, “club_status”: “platinum”, “comments”: “none”
+CREATE STREAM RATINGS_WITH_CUSTOMER_DATA AS SELECT * FROM RATINGS LEFT JOIN CUSTOMERS ON R.ID=C.ID;
+}
+Apache Kafka and KSQL in Action : Let’s Build a Streaming Data Pipeline!</p>                </div>
+            </div>
+                    <h4 class="slide-heading">Slide 41</h4>
+            <div class="slide-item">
+                <div class="media">
+                    <img class="slide-image" src="https://on.notist.cloud/slides/deck3051/large-40.jpg" alt="Slide 41" loading="lazy"
+                                 aria-describedby="slide41-desc"
+                                 srcset="https://on.notist.cloud/slides/deck3051/thumb-40.jpg 640w,
+                                                        https://on.notist.cloud/slides/deck3051/large-40.jpg 1600w">                </div>
+                <div class="content" id="slide41-desc">
+                    <h4></h4><p>@rmoff / http://cnfl.io/ksql
+{ “rating_id”: 5313, “user_id”: 3, “stars”: 4, “route_id”: 6975, “rating_time”: 1519304105213, “channel”: “web”, “message”: “worst. flight. ever. #neveragain” }
+Producer API
+t c e n n o C a k f a K
+Join each rating to customer data
+RATINGS_WITH_CUSTOMER_DATA
+Filter for just PLATINUM customers
+UNHAPPY_PLATINUM_CUSTOMERS
+{ “id”: 3, “first_name”: “Merilyn”, “last_name”: “Doughartie”, “email”: “<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="39545d564c5e51584b4d505c08795d5c5d5c5a544a175a5654">[email&#160;protected]</a>”, “gender”: “Female”, “club_status”: “platinum”, “comments”: “none”
+CREATE STREAM UNHAPPY_PLATINUM_CUSTOMERS AS SELECT * FROM RATINGS_WITH_CUSTOMER_DATA WHERE STARS &lt; 3
+}
+Apache Kafka and KSQL in Action : Let’s Build a Streaming Data Pipeline!</p>                </div>
+            </div>
+                    <h4 class="slide-heading">Slide 42</h4>
+            <div class="slide-item">
+                <div class="media">
+                    <img class="slide-image" src="https://on.notist.cloud/slides/deck3051/large-41.png" alt="Slide 42" loading="lazy"
+                                 aria-describedby="slide42-desc"
+                                 srcset="https://on.notist.cloud/slides/deck3051/thumb-41.png 640w,
+                                                        https://on.notist.cloud/slides/deck3051/large-41.png 1600w">                </div>
+                <div class="content" id="slide42-desc">
+                    <h4></h4><p>Confluent Open Source : Apache Kafka with a bunch of cool stuff! For free!
+@rmoff / http://cnfl.io/ksql
+Log Events
+Database Changes
+loT Data
+Web Events
+…
+Confluent Platform
+Data Integration
+Real-time Applications Monitoring &amp; Administration Confluent Control Center | Security Confluent Platform Transformations
+Hadoop
+Operations Replicator | Auto Data Balancing Custom Apps
+Database
+Data Compatibility Schema Registry
+SQL Stream Processing KSQL
+Data Warehouse
+Development and Connectivity Clients | Connectors | REST Proxy | CLI
+CRM
+Monitoring
+Apache Kafka® Core | Connect API | Streams API
+…
+CUSTOMER SELF-MANAGED
+Datacenter
+Analytics
+…
+CONFLUENT FULLY-MANAGED
+Public Cloud
+Confluent Cloud
+Apache Kafka and KSQL in Action : Let’s Build a Streaming Data Pipeline!</p>                </div>
+            </div>
+                    <h4 class="slide-heading">Slide 43</h4>
+            <div class="slide-item">
+                <div class="media">
+                    <img class="slide-image" src="https://on.notist.cloud/slides/deck3051/large-42.png" alt="Slide 43" loading="lazy"
+                                 aria-describedby="slide43-desc"
+                                 srcset="https://on.notist.cloud/slides/deck3051/thumb-42.png 640w,
+                                                        https://on.notist.cloud/slides/deck3051/large-42.png 1600w">                </div>
+                <div class="content" id="slide43-desc">
+                    <h4></h4><p>@rmoff / http://cnfl.io/ksql
+If you remember one thing… (or three) •Kafka Connect
+• Integration between Kafka and other data stores •Kafka • Provides stream processing natively •KSQL • Build stream processing apps with just SQL Apache Kafka and KSQL in Action : Let’s Build a Streaming Data Pipeline!</p>                </div>
+            </div>
+                    <h4 class="slide-heading">Slide 44</h4>
+            <div class="slide-item">
+                <div class="media">
+                    <img class="slide-image" src="https://on.notist.cloud/slides/deck3051/large-43.jpg" alt="Slide 44" loading="lazy"
+                                 aria-describedby="slide44-desc"
+                                 srcset="https://on.notist.cloud/slides/deck3051/thumb-43.jpg 640w,
+                                                        https://on.notist.cloud/slides/deck3051/large-43.jpg 1600w">                </div>
+                <div class="content" id="slide44-desc">
+                    <h4></h4><p>Free Books!
+@rmoff / http://cnfl.io/ksql
+https://www.confluent.io/apache-kafka-stream-processing-book-bundle
+Apache Kafka and KSQL in Action : Let’s Build a Streaming Data Pipeline!</p>                </div>
+            </div>
+                    <h4 class="slide-heading">Slide 45</h4>
+            <div class="slide-item">
+                <div class="media">
+                    <img class="slide-image" src="https://on.notist.cloud/slides/deck3051/large-44.png" alt="Slide 45" loading="lazy"
+                                 aria-describedby="slide45-desc"
+                                 srcset="https://on.notist.cloud/slides/deck3051/thumb-44.png 640w,
+                                                        https://on.notist.cloud/slides/deck3051/large-44.png 1600w">                </div>
+                <div class="content" id="slide45-desc">
+                    <h4></h4><p>Try it out!
+@rmoff / http://cnfl.io/ksql
+https://cnfl.io/kafka-ksql-elastic
+Apache Kafka and KSQL in Action : Let’s Build a Streaming Data Pipeline!</p>                </div>
+            </div>
+                    <h4 class="slide-heading">Slide 46</h4>
+            <div class="slide-item">
+                <div class="media">
+                    <img class="slide-image" src="https://on.notist.cloud/slides/deck3051/large-45.jpg" alt="Slide 46" loading="lazy"
+                                 aria-describedby="slide46-desc"
+                                 srcset="https://on.notist.cloud/slides/deck3051/thumb-45.jpg 640w,
+                                                        https://on.notist.cloud/slides/deck3051/large-45.jpg 1600w">                </div>
+                <div class="content" id="slide46-desc">
+                    <h4></h4><p>https://www.confluent.io/ksql
+http://cnfl.io/slack @rmoff <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="fe8c919c9790be9d919098928b9b908ad09791">[email&#160;protected]</a></p>                </div>
+            </div>
+                    <h4 class="slide-heading">Slide 47</h4>
+            <div class="slide-item">
+                <div class="media">
+                    <img class="slide-image" src="https://on.notist.cloud/slides/deck3051/large-46.png" alt="Slide 47" loading="lazy"
+                                 aria-describedby="slide47-desc"
+                                 srcset="https://on.notist.cloud/slides/deck3051/thumb-46.png 640w,
+                                                        https://on.notist.cloud/slides/deck3051/large-46.png 1600w">                </div>
+                <div class="content" id="slide47-desc">
+                    <h4></h4><p>Useful links
+@rmoff / http://cnfl.io/ksql
+• Embrace the Anarchy : Apache Kafka’s Role in Modern Data Architectures Recording &amp; Slides • Look Ma, no Code! Building Streaming Data Pipelines with Apache Kafka and KSQL • Steps to Building a Streaming ETL Pipeline with Apache Kafka and KSQL Recording &amp; Slides • https://www.confluent.io/blog/ksql-in-action-real-time-streaming-etl-from-oracle-transactional-data • https://github.com/confluentinc/ksql/
+Apache Kafka and KSQL in Action : Let’s Build a Streaming Data Pipeline!</p>                </div>
+            </div>
+                    <h4 class="slide-heading">Slide 48</h4>
+            <div class="slide-item">
+                <div class="media">
+                    <img class="slide-image" src="https://on.notist.cloud/slides/deck3051/large-47.png" alt="Slide 48" loading="lazy"
+                                 aria-describedby="slide48-desc"
+                                 srcset="https://on.notist.cloud/slides/deck3051/thumb-47.png 640w,
+                                                        https://on.notist.cloud/slides/deck3051/large-47.png 1600w">                </div>
+                <div class="content" id="slide48-desc">
+                    <h4></h4><p>Resources
+@rmoff / http://cnfl.io/ksql
+• CDC Spreadsheet
+#EOF
+• Blog: No More Silos: How to Integrate your Databases with Apache Kafka and CDC • #partner-engineering on Slack for questions
+• BD team (#partners / <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d2a2b3a0a6bcb7a0a192b1bdbcb4bea7b7bca6fcbbbd">[email&#160;protected]</a>) can help with introductions on a given sales op
+Apache Kafka and KSQL in Action : Let’s Build a Streaming Data Pipeline!</p>                </div>
+            </div>
+            </div>
+</div>
+
+            <img src="https://noti.st/activity/presentation/5dqGLs.png" alt="" width="1" height="1">
+    	
+
+    <footer class="main-footer full-width">
+    <div class="content-width r-grid-4">
+        <small class="logo-strap">
+            Powered by <a href="https://noti.st/" target="_blank" rel="noopener">
+                <img src="https://on.notist.cloud/assets/svg/notist.svg" alt="Notist" height="16">
+            </a>
+        </small>
+    </div>
+</footer>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script async src="https://www.googletagmanager.com/gtag/js?id=UA-107258730-1"></script>
+<script type="text/javascript">
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+    gtag('config', 'UA-107258730-1', {
+      'page_path': '/rmoff/5dqGLs/slides'
+  });
+  </script>
+</body>
+</html>
